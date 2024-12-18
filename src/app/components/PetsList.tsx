@@ -15,14 +15,15 @@ export default function PetsList({
   selectedPetId,
 }: PetListProps) {
   return (
-    <ul className='bg-white border-b border-black/[0.08]'>
-      {petsData.map((pet) => (
+    <ul className='bg-white shadow-sm'>
+      {petsData.map((pet, index) => (
         <li key={pet?.id}>
           <Button
             className={cn(
               'w-full h-[80px] flex items-center justify-start px-5 text-base gap-3 hover:bg-[#EFF1F2] transition-all',
               {
                 'bg-[#EFF1F2]': pet?.id === selectedPetId,
+                'border-b border-black/[0.08]': index !== petsData.length - 1,
               }
             )}
             variant={'ghost'}

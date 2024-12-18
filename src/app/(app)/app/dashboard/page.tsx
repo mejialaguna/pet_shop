@@ -4,7 +4,7 @@ import { ContentBlock, PetDetails, PetsList, SearchForm, Stats } from "@/app/com
 import { usePetContent } from "@/hooks/usePetContent";
 
 export default function Page() {
-  const { pets: petsData, selectedPetId, handleChangeSelectedPetId } = usePetContent();
+  const { pets: petsData, selectedPetId, handleChangeSelectedPetId, selectedPet } = usePetContent();
 
   return (
     <main className='mx-7'>
@@ -27,7 +27,7 @@ export default function Page() {
           <SearchForm />
         </div>
 
-        <div className='relative md:row-start-2 md:row-span-full md:col-start-1 md:col-span-1 overflow-auto'>
+        <div className='relative shadow-md md:row-start-2 md:row-span-full md:col-start-1 md:col-span-1 overflow-auto'>
           <ContentBlock>
             <PetsList
               petsData={petsData}
@@ -39,7 +39,7 @@ export default function Page() {
 
         <div className='md:row-start-1 md:row-span-full md:col-start-2 md:col-span-full'>
           <ContentBlock>
-            <PetDetails />
+            <PetDetails selectedPet={selectedPet} />
           </ContentBlock>
         </div>
       </div>

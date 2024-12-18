@@ -12,6 +12,7 @@ interface PetContext {
   pets: Pet[];
   selectedPetId: string | null;
   handleChangeSelectedPetId: (id: string) => void;
+  selectedPet: Pet | null | undefined;
 }
 
 export const PetContext = createContext<PetContext | null>(null);
@@ -26,6 +27,8 @@ export default function PetContextProvider({
   const handleChangeSelectedPetId = (id: Pet['id']) => {
     setSelectedPetId(id);
   };
+  const petsById = new Map(pets.map((pet) => [pet.id, pet]));
+  const selectedPet = selectedPetId ? petsById.get(selectedPetId) : null;
 
   return (
     <PetContext.Provider
@@ -33,6 +36,7 @@ export default function PetContextProvider({
         pets,
         selectedPetId,
         handleChangeSelectedPetId,
+        selectedPet,
       }}
     >
       {children}

@@ -1,4 +1,4 @@
-export interface Pet {
+interface Pet {
   id: string;
   name: string;
   ownerName: string;
@@ -6,3 +6,9 @@ export interface Pet {
   age: number;
   notes: string;
 }
+
+interface PetDetailsProps {
+  selectedPet: Pet | null | undefined;
+}
+
+export type { Pet, PetDetailsProps };
