@@ -7,12 +7,12 @@ export default function page() {
   return (
     <main className='bg-[#F1A469] min-h-screen flex flex-col xl:flex-row items-center justify-center gap-10'>
       <Image
-        src={`../icon.svg`}
+        src={'/havenCare.png'}
         alt={'logo'}
         width={520}
         height={480}
-        sizes='100px'
-        className='rounded mr-5'
+        sizes='300px'
+        className='rounded-3xl mr-5'
       />
       <div>
         <h1 className='text-5xl font-semibold my-6 max-w-[500px]'>
