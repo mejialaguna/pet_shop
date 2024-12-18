@@ -1,11 +1,6 @@
-'use client';
-
 import { ContentBlock, PetDetails, PetsList, SearchForm, Stats } from "@/app/components";
-import { usePetContent } from "@/hooks/usePetContent";
 
 export default function Page() {
-  const { pets: petsData, selectedPetId, handleChangeSelectedPetId, selectedPet } = usePetContent();
-
   return (
     <main className='mx-7'>
       <div className='flex items-center justify-between text-white py-8'>
@@ -29,17 +24,13 @@ export default function Page() {
 
         <div className='relative shadow-md md:row-start-2 md:row-span-full md:col-start-1 md:col-span-1 overflow-auto'>
           <ContentBlock>
-            <PetsList
-              petsData={petsData}
-              handleChangeSelectedPetId={handleChangeSelectedPetId}
-              selectedPetId={selectedPetId}
-            />
+            <PetsList />
           </ContentBlock>
         </div>
 
         <div className='md:row-start-1 md:row-span-full md:col-start-2 md:col-span-full'>
           <ContentBlock>
-            <PetDetails selectedPet={selectedPet} />
+            <PetDetails />
           </ContentBlock>
         </div>
       </div>

@@ -1,29 +1,36 @@
-import { Button } from '@/components/ui/button';
-import { Pet } from '@/interfaces/Pet';
-import { cn } from '@/lib/utils';
+'use client';
+
+import { useMemo } from 'react';
 import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { usePetContent } from '@/hooks/usePetContent';
+import { cn } from '@/lib/utils';
+import { useSearchContext } from '@/hooks/useSearchContext';
 
-interface PetListProps {
-  petsData: Pet[];
-  handleChangeSelectedPetId: (id: Pet['id']) => void;
-  selectedPetId: Pet['id'] | null;
-}
+export default function PetsList() {
+  const {
+    pets: petsData,
+    selectedPetId,
+    handleChangeSelectedPetId
+  } = usePetContent();
+  const { searchQuery } = useSearchContext();
+  const filteredPets = useMemo(() => {
+    if (!searchQuery) return petsData;
+    return petsData?.filter((pet) =>
+      pet?.name?.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [petsData, searchQuery]);
 
-export default function PetsList({
-  petsData,
-  handleChangeSelectedPetId,
-  selectedPetId,
-}: PetListProps) {
   return (
     <ul className='bg-white shadow-sm'>
-      {petsData.map((pet, index) => (
+      {filteredPets?.map((pet, index) => (
         <li key={pet?.id}>
           <Button
             className={cn(
               'w-full h-[80px] flex items-center justify-start px-5 text-base gap-3 hover:bg-[#EFF1F2] transition-all',
               {
                 'bg-[#EFF1F2]': pet?.id === selectedPetId,
-                'border-b border-black/[0.08]': index !== petsData.length - 1,
+                'border-b border-light': index !== petsData.length - 1,
               }
             )}
             variant={'ghost'}

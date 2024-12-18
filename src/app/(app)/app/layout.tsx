@@ -1,6 +1,7 @@
 import PetContextProvider from '@/context/pet-context-provider';
 import { AppFooter, AppHeader, AppToppper } from '../../components';
 import { Pet } from '@/interfaces/Pet';
+import SearchContextProvider from '@/context/search-context-provider';
 
 export default async function AppLayout({
   children,
@@ -22,7 +23,9 @@ export default async function AppLayout({
       <AppToppper />
       <div className='flex flex-col max-w-[1000px] mx-auto min-h-screen'>
         <AppHeader />
-        <PetContextProvider data={petsData}>{children}</PetContextProvider>
+        <SearchContextProvider>
+          <PetContextProvider data={petsData}>{children}</PetContextProvider>
+        </SearchContextProvider>
         <AppFooter />
       </div>
     </>

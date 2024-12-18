@@ -1,9 +1,9 @@
-import { PetDetailsProps } from "@/interfaces/Pet";
-import Image from "next/image";
+import Image from 'next/image';
+import { PetDetailsProps } from '@/interfaces/Pet';
 
 export default function PetImage({ selectedPet }: PetDetailsProps) {
   return (
-    <div className='flex items-center bg-white px-8 py-5 border-b border-black/[0.08]'>
+    <div className='flex items-center bg-white px-8 py-5 border-b border-light'>
       <Image
         src={selectedPet?.imageUrl ?? ''}
         alt={`selected pet`}
