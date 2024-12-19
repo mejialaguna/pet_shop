@@ -1,7 +1,17 @@
+import { cn } from "@/lib/utils";
 
-export default function ContentBlock({children}: {children: React.ReactNode}) {
+interface ContentBlockProps {
+  children: React.ReactNode;
+  additionalClasses?: string;
+}
+
+export default function ContentBlock({ children, additionalClasses }: ContentBlockProps) {
   return (
-    <div className='bg-[#F8F8FA] shadow-md rounded-md overflow-scroll h-full w-full scrollbar-hide'>
+    <div
+      className={
+        (cn('bg-[#F8F8FA] shadow-md rounded-md overflow-scroll h-full w-full scrollbar-hide', additionalClasses))
+      }
+    >
       {children}
     </div>
   );

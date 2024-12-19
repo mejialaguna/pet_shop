@@ -9,3 +9,6 @@ export { default as ContentBlock } from './ContentBlock';
 export { default as PetImage } from './PetImage';
 export { default as PetOwner } from './PetOwner';
 export { default as PetNotes } from './PetNotes';
+export { default as PetButton } from './PetButton';
+export { default as Modal } from './modal';
+export { default as PetForm } from './PetForm';

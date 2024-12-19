@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { usePetContent } from '@/hooks/usePetContent';
@@ -13,13 +13,18 @@ export default function PetsList() {
     selectedPetId,
     handleChangeSelectedPetId
   } = usePetContent();
-  const { searchQuery } = useSearchContext();
+  const { searchQuery, setSearchQuery } = useSearchContext();
   const filteredPets = useMemo(() => {
     if (!searchQuery) return petsData;
     return petsData?.filter((pet) =>
       pet?.name?.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [petsData, searchQuery]);
+
+  const handleSelecttion = useCallback((id:string) => {
+    handleChangeSelectedPetId(id);
+    setSearchQuery('');
+  }, [handleChangeSelectedPetId]);
 
   return (
     <ul className='bg-white shadow-sm'>
@@ -34,7 +39,7 @@ export default function PetsList() {
               }
             )}
             variant={'ghost'}
-            onClick={() => handleChangeSelectedPetId(pet.id)}
+            onClick={() => handleSelecttion(pet.id)}
           >
             <Image
               src={pet.imageUrl}

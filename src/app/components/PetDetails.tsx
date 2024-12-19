@@ -6,6 +6,7 @@ import { usePetContent } from '@/hooks/usePetContent';
 
 export default function PetDetails() {
   const { selectedPet } = usePetContent();
+
   if (!selectedPet)
     return (
       <div className='flex h-full w-full items-center justify-center'>

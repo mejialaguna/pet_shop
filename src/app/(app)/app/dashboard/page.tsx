@@ -1,4 +1,13 @@
-import { ContentBlock, PetDetails, PetsList, SearchForm, Stats } from "@/app/components";
+import {
+  PetButton,
+  ContentBlock,
+  Modal,
+  PetDetails,
+  PetsList,
+  SearchForm,
+  Stats,
+  PetForm,
+} from '@/app/components';
 
 export default function Page() {
   return (
@@ -25,6 +34,12 @@ export default function Page() {
         <div className='relative shadow-md md:row-start-2 md:row-span-full md:col-start-1 md:col-span-1 overflow-auto'>
           <ContentBlock>
             <PetsList />
+
+            <Modal title='Add new pet'>
+              <PetButton />
+              <PetForm title='Add new pet'/>
+            </Modal>
+
           </ContentBlock>
         </div>
 

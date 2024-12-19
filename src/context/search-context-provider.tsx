@@ -9,6 +9,7 @@ type SearchContextProvider = {
 type TSearchContext = {
   searchQuery: string;
   handleChangeSearchQuery: (newValue: string) => void;
+  setSearchQuery: (newValue: string) => void;
 };
 
 export const SearchContext = createContext<TSearchContext | null>(null);
@@ -16,7 +17,7 @@ export const SearchContext = createContext<TSearchContext | null>(null);
 export default function SearchContextProvider({
   children,
 }: SearchContextProvider) {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   const handleChangeSearchQuery = (newValue: string) => {
     setSearchQuery(newValue);
@@ -27,6 +28,7 @@ export default function SearchContextProvider({
       value={{
         searchQuery,
         handleChangeSearchQuery,
+        setSearchQuery,
       }}
     >
       {children}
