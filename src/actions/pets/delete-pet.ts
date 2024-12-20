@@ -3,8 +3,8 @@
 import { revalidatePath } from 'next/cache';
 
 import prisma from '@/lib/prisma';
-import { petIdSchema, TPpetIdSchema } from '@/lib/validations';
 import { sleep } from '@/lib/utils';
+import { petIdSchema, TPpetIdSchema } from '@/lib/validations';
 
 export const deletePet = async (id: TPpetIdSchema) => {
   const { success, data: petId } = petIdSchema.safeParse(id);
