@@ -1,4 +1,5 @@
 import { z } from 'zod';
+
 import DEFAULT_PET_IMAGE from '../../public/animal_place_holder.png';
 
 export const petIdSchema = z.string().cuid();

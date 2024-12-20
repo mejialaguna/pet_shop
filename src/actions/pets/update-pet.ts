@@ -1,7 +1,8 @@
 'use server';
 
-import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
+
+import prisma from '@/lib/prisma';
 
 interface CreatePetResponse {
   ok: boolean;
@@ -9,7 +10,6 @@ interface CreatePetResponse {
 }
 
 export const editPet = async (id: string, newPetData): Promise<CreatePetResponse> => {
-  console.log('newPetData', newPetData);
   try { 
     await prisma.pet.update({
       where: { id },
@@ -17,7 +17,7 @@ export const editPet = async (id: string, newPetData): Promise<CreatePetResponse
     });
 
     revalidatePath('/app', 'layout');
-    console.log('revalidating Path');
+
     return {
       ok: true,
       message: `${newPetData?.name}, has been updated`,

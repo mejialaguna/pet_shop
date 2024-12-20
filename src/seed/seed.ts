@@ -1,4 +1,4 @@
-import { Pet } from "@/interfaces/Pet";
+import { Pet } from '@/interfaces/Pet';
 
 export const initialData: Pet[] = [
   {

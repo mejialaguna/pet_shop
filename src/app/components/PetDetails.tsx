@@ -1,8 +1,10 @@
 'use client';
 
-import { PetImage, PetNotes, PetOwner } from './';
 import Image from 'next/image';
+
 import { usePetContent } from '@/hooks/usePetContent';
+
+import { PetImage, PetNotes, PetOwner } from './';
 
 export default function PetDetails() {
   const { selectedPet } = usePetContent();

@@ -1,11 +1,12 @@
 'use client';
 
-import { useMemo, useCallback } from 'react';
 import Image from 'next/image';
+import { useMemo, useCallback } from 'react';
+
 import { Button } from '@/components/ui/button';
 import { usePetContent } from '@/hooks/usePetContent';
-import { cn } from '@/lib/utils';
 import { useSearchContext } from '@/hooks/useSearchContext';
+import { cn } from '@/lib/utils';
 
 export default function PetsList() {
   const {

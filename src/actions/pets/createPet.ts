@@ -1,8 +1,9 @@
 'use server';
 
-import prisma from "@/lib/prisma";
-import { sleep } from "@/lib/utils";
-import { revalidatePath } from "next/cache";
+import { revalidatePath } from 'next/cache';
+
+import prisma from '@/lib/prisma';
+import { sleep } from '@/lib/utils';
 
 interface CreatePetResponse {
   ok: boolean;
@@ -17,7 +18,7 @@ export const createPet = async (newPetData): Promise<CreatePetResponse> => {
       data: { ...newPetData },
     });
 
-    ('we can revalidate what we need either way using url path or the folder structure where the action is located');
+    // ('we can revalidate what we need either way using url path or the folder structure where the action is located');
     // revalidatePath('/app/dashboard');
     revalidatePath('/app', 'layout');
 

@@ -1,8 +1,8 @@
 'use server';
 
-import prisma from '@/lib/prisma';
-import { ok } from 'assert';
 import { revalidatePath } from 'next/cache';
+
+import prisma from '@/lib/prisma';
 
 export const deletePet = async (id: string) => {
   try {

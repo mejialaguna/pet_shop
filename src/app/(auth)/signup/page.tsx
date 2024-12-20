@@ -1,4 +1,4 @@
-import { RegisterForm } from "./ui/RegisterForm";
+import { RegisterForm } from './ui/RegisterForm';
 
 export default function Page() {
   return (
