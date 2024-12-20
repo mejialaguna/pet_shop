@@ -1,8 +1,9 @@
 import { Pet } from '@/interfaces/Pet';
+import cuid from 'cuid';
 
 export const initialData: Pet[] = [
   {
-    id: 'ef5274e6-dd83-4ea1-8c7b-aeda7c659cb9',
+    id: cuid(),
     name: 'Rocky',
     ownerName: 'Jane Smith',
     imageUrl:
@@ -11,7 +12,7 @@ export const initialData: Pet[] = [
     notes: 'Loves playing fetch.',
   },
   {
-    id: 'f8903dbf-1b76-4851-afff-fb4fb56b21f6',
+    id: cuid(),
     name: 'Bella',
     ownerName: 'Morgan Lee',
     imageUrl:
@@ -20,7 +21,7 @@ export const initialData: Pet[] = [
     notes: 'Shy but warms up quickly.',
   },
   {
-    id: '78f97aac-1e9c-48bf-b101-66ba403bce09',
+    id: cuid(),
     name: 'Lucy',
     ownerName: 'Chris Johnson',
     imageUrl:
@@ -29,7 +30,7 @@ export const initialData: Pet[] = [
     notes: 'Needs a special diet.',
   },
   {
-    id: '00e880aa-8bed-417b-9197-2ccce17e0267',
+    id: cuid(),
     name: 'Evelyn',
     ownerName: 'Chris Johnson',
     imageUrl:
@@ -38,7 +39,7 @@ export const initialData: Pet[] = [
     notes: 'Great with other pets.',
   },
   {
-    id: 'f5beaa66-c9c0-41d0-bbbc-72b23bf9d147',
+    id: cuid(),
     name: 'Milo',
     ownerName: 'Jamie Green',
     imageUrl:
@@ -47,7 +48,7 @@ export const initialData: Pet[] = [
     notes: 'Great with other pets.',
   },
   {
-    id: 'a0f5282a-3a69-4f89-a652-b0c8d6c77272',
+    id: cuid(),
     name: 'Luna',
     ownerName: 'Alex Kim',
     imageUrl:
@@ -56,7 +57,7 @@ export const initialData: Pet[] = [
     notes: 'Enjoys long walks in the park.',
   },
   {
-    id: '19b587aa-8aef-4e0e-b47f-7943cedc9143',
+    id: cuid(),
     name: 'Leon Scanor',
     ownerName: 'Toni Parker',
     imageUrl:
@@ -65,7 +66,7 @@ export const initialData: Pet[] = [
     notes: 'Afraid of thunderstorms.',
   },
   {
-    id: 'ff2241a4-de12-42c2-aa26-2bd4ede4fa54',
+    id: cuid(),
     name: 'Mia',
     ownerName: 'Jordan Brown',
     imageUrl:
@@ -74,7 +75,7 @@ export const initialData: Pet[] = [
     notes: 'Very friendly with kids.',
   },
   {
-    id: '9135c30f-bfb5-41e8-a3a0-3dba627b504f',
+    id: cuid(),
     name: 'Charlie',
     ownerName: 'John Doe',
     imageUrl:
@@ -83,7 +84,7 @@ export const initialData: Pet[] = [
     notes: 'Afraid of thunderstorms.',
   },
   {
-    id: '5b1be4ad-5d93-4aae-8f14-28bf1eec9bc7',
+    id: cuid(),
     name: 'Michael',
     ownerName: 'Morgan Lee',
     imageUrl:

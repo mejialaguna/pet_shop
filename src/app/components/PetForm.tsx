@@ -54,13 +54,14 @@ export default function PetForm({
      onFormSubmission?.();
 
     const petData = getValues();
+
     const sanitizedPetData: PetEssentials = {
       ...petData,
       imageUrl:
         petData?.imageUrl && typeof petData?.imageUrl === 'string'
           ? petData?.imageUrl
           : 'https://res.cloudinary.com/jlml/image/upload/v1732854541/shop-with-me/nl7nmglwobqi3thdvoor.jpg',
-      age: +petData?.age,
+      age: +petData?.age, 
     };
 
      const action = isNew
@@ -76,7 +77,7 @@ export default function PetForm({
         <div className='space-y-1'>
           <Label htmlFor='name'>Name</Label>
           <Input id='name' {...register('name')} />
-          {errors.name && <p className='text-red-500'>{errors.name.message}</p>}
+          {errors.name && <p className='text-red-500 text-xs'>{errors.name.message}</p>}
         </div>
 
         <div className='space-y-1'>
@@ -86,7 +87,7 @@ export default function PetForm({
             {...register('ownerName')}
           />
           {errors.ownerName && (
-            <p className='text-red-500'>{errors.ownerName.message}</p>
+            <p className='text-red-500 text-xs'>{errors.ownerName.message}</p>
           )}
         </div>
 
@@ -101,14 +102,14 @@ export default function PetForm({
         <div className='space-y-1'>
           <Label htmlFor='age'>Age</Label>
           <Input id='age' {...register('age')} />
-          {errors.age && <p className='text-red-500'>{errors.age.message}</p>}
+          {errors.age && <p className='text-red-500 text-xs'>{errors.age.message}</p>}
         </div>
 
         <div className='space-y-1'>
           <Label htmlFor='notes'>Notes</Label>
           <Textarea id='notes' {...register('notes')} />
           {errors.notes && (
-            <p className='text-red-500'>{errors.notes.message}</p>
+            <p className='text-red-500 text-xs'>{errors.notes.message}</p>
           )}
         </div>
       </div>
