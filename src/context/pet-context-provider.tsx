@@ -1,10 +1,11 @@
 'use client';
 
-import { createContext, useOptimistic, useState } from 'react';
-import { toast } from '@/components/ui/use-toast';
 import { CheckCircledIcon, MinusCircledIcon } from '@radix-ui/react-icons';
-import { Pet } from '@/interfaces/Pet';
+import { createContext, useOptimistic, useState } from 'react';
+
 import { createPet, editPet, deletePet } from '@/actions/pets';
+import { toast } from '@/components/ui/use-toast';
+import { Pet } from '@/interfaces/Pet';
 
 interface PetContextProviderProps {
   data: Pet[];

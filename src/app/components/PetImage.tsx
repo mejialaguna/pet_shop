@@ -1,9 +1,11 @@
 import Image from 'next/image';
+
 import { Button } from '@/components/ui/button';
-import Modal from './modal';
-import PetForm from './PetForm';
 import { usePetContent } from '@/hooks/usePetContent';
 import { PetDetailsProps } from '@/interfaces/Pet';
+
+import Modal from './modal';
+import PetForm from './PetForm';
 
 export default function PetImage({ selectedPet }: PetDetailsProps) {
   const { handleCheckoutPet } = usePetContent()
@@ -13,7 +15,7 @@ export default function PetImage({ selectedPet }: PetDetailsProps) {
       <div className='flex items-center'>
         <Image
           src={selectedPet?.imageUrl ?? ''}
-          alt={`selected pet`}
+          alt={'selected pet'}
           width={75}
           height={75}
           className='w-[75px] h-[75px] rounded-full object-cover'

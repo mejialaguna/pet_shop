@@ -1,5 +1,6 @@
-import { useContext } from "react"
-import { PetContext } from "@/context/pet-context-provider"
+import { useContext } from 'react'
+
+import { PetContext } from '@/context/pet-context-provider'
 
 export const usePetContent = () => {
   const context = useContext(PetContext);

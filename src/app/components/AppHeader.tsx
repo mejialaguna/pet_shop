@@ -1,9 +1,10 @@
 'use client';
 
-import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+
+import { cn } from '@/lib/utils';
 
 const routesLinks = [
   {
@@ -21,7 +22,7 @@ export default function Appheader() {
   return (
     <header className='flex justify-between mx-7 items-center border-b border-white/40'>
       <Image
-        src={`../icon.svg`}
+        src={'../icon.svg'}
         alt={'logo'}
         width={50}
         height={50}

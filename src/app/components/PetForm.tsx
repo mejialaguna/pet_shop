@@ -1,15 +1,17 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Label } from '@radix-ui/react-label';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@radix-ui/react-label';
 import { usePetContent } from '@/hooks/usePetContent';
-import { petFormSchema, TPetForm } from '@/lib/validations';
-import PetFormBtn from './pet-form-btn';
 import { Pet } from '@/interfaces/Pet';
+import { petFormSchema, TPetForm } from '@/lib/validations';
+
+import PetFormBtn from './pet-form-btn';
 
 type PetFormProps = {
   title?: string;
@@ -27,7 +29,6 @@ export default function PetForm({
   const { handleAddPet, selectedPet, handleEditPet } = usePetContent();
   const {
     register,
-    handleSubmit,
     trigger,
     getValues,
     formState: { errors },
@@ -45,7 +46,7 @@ export default function PetForm({
         : undefined,
   });
 
-  const handleAction = useCallback(async (formData: FormData) => {
+  const handleAction = useCallback(async () => {
      const result = await trigger();
      if (!result) return;
 

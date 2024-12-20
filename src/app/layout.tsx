@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 import './styles/globals.css';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Pet dayCare app",
-  description: "Show pets the love they deserve at PetCare DayCare – where every tail wags with happiness!",
+  title: 'Pet dayCare app',
+  description: 'Show pets the love they deserve at PetCare DayCare – where every tail wags with happiness!',
 };
 
 export default function RootLayout({

@@ -1,4 +1,4 @@
-import { PetDetailsProps } from "@/interfaces/Pet";
+import { PetDetailsProps } from '@/interfaces/Pet';
 
 export default function PetOwner({ selectedPet }: PetDetailsProps) {
   return (

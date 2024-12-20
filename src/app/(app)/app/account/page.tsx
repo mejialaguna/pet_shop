@@ -1,4 +1,4 @@
-import { ContentBlock } from "@/app/components";
+import { ContentBlock } from '@/app/components';
 
 export default function Page() {
   return (
