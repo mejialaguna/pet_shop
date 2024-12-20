@@ -12,7 +12,10 @@ export const getPets = async () => {
         imageUrl: true,
         age: true,
         notes: true,
-      }
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
     return {ok: true, pets}
   } catch (error) {

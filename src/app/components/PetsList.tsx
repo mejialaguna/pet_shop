@@ -9,9 +9,9 @@ import { useSearchContext } from '@/hooks/useSearchContext';
 
 export default function PetsList() {
   const {
-    pets: petsData,
+    optimisticPets: petsData,
     selectedPetId,
-    handleChangeSelectedPetId
+    handleChangeSelectedPetId,
   } = usePetContent();
   const { searchQuery, setSearchQuery } = useSearchContext();
   const filteredPets = useMemo(() => {

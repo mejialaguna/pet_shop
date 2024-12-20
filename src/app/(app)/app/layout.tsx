@@ -2,8 +2,8 @@ import PetContextProvider from '@/context/pet-context-provider';
 import { AppFooter, AppHeader, AppToppper } from '../../components';
 import { Pet } from '@/interfaces/Pet';
 import SearchContextProvider from '@/context/search-context-provider';
-import { getPets } from '@/actions/pets/get-pets';
 import { Toaster } from '@/components/ui/toaster';
+import { getPets } from '@/actions/pets';
 
 export default async function AppLayout({
   children,
