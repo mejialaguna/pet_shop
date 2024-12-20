@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache';
 
 import { PetEssentials } from '@/interfaces/Pet';
 import prisma from '@/lib/prisma';
+import { petFormSchema } from '@/lib/validations';
 import { sleep } from '@/lib/utils';
 
 interface CreatePetResponse {
@@ -12,11 +13,20 @@ interface CreatePetResponse {
 }
 
 export const createPet = async (newPetData: PetEssentials): Promise<CreatePetResponse> => {
-  try {
-    await sleep(1000);
+  const { success, data } = petFormSchema.safeParse(newPetData);
 
+  if (!success) {
+    return {
+      ok: false,
+      message: 'Something went wrong, invalid pet data.',
+    }
+  }
+
+  await sleep(1000);
+
+  try {
     await prisma.pet.create({
-      data: { ...newPetData },
+      data: { ...data },
     });
 
     // ('we can revalidate what we need either way using url path or the folder structure where the action is located');

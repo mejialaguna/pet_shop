@@ -3,14 +3,27 @@
 import { revalidatePath } from 'next/cache';
 
 import prisma from '@/lib/prisma';
+import { petIdSchema, TPpetIdSchema } from '@/lib/validations';
+import { sleep } from '@/lib/utils';
 
-export const deletePet = async (id: string) => {
+export const deletePet = async (id: TPpetIdSchema) => {
+  const { success, data: petId } = petIdSchema.safeParse(id);
+
+    if (!success) {
+      return {
+        ok: false,
+        message: 'Something went wrong updating, invalid pet data.',
+      };
+    }
+  
+  await sleep(1000);
+
   try {
     const { name } = await prisma.pet.delete({
-      where: { id },
+      where: { id: petId },
       select: {
         name: true,
-      }
+      },
     });
 
     revalidatePath('/app', 'layout');
