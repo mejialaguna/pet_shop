@@ -1,25 +1,36 @@
 'use client';
 
-import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@radix-ui/react-label';
+import { useToast } from '@/components/ui/use-toast';
+import { MinusCircledIcon, CheckCircledIcon } from '@radix-ui/react-icons';
 import { usePetContent } from '@/hooks/usePetContent';
 import { petFormSchema, TPetForm } from '@/lib/validations';
-import { Pet } from '@/interfaces/Pet';
-import { Button } from '@/components/ui/button';
+import { createPet } from '@/actions/pets/createPet';
+import PetFormBtn from './pet-form-btn';
+import { editPet } from '@/actions/pets/update-pet';
+import { useCallback } from 'react';
 
 type PetFormProps = {
   title?: string;
   onFormSubmission?: () => void;
   isNew?: boolean;
 };
+interface CreatePetResponse {
+  ok: boolean;
+  message: string;
+}
 
-export default function PetForm({ title, onFormSubmission, isNew = true }: PetFormProps) {
+export default function PetForm({
+  title,
+  onFormSubmission,
+  isNew = true,
+}: PetFormProps) {
   const { handleAddPet, selectedPet, handleEditPet } = usePetContent();
-
+  const { toast } = useToast();
   const {
     register,
     handleSubmit,
@@ -40,44 +51,45 @@ export default function PetForm({ title, onFormSubmission, isNew = true }: PetFo
         : undefined,
   });
 
-  const onSubmit = useCallback(async (data: TPetForm) => {
-    const formData = new FormData();
+  const handleAction = useCallback(async (formData: FormData) => {
+     const result = await trigger();
+     if (!result) return;
 
-    if (!Object.keys(errors).length && onFormSubmission) {
-      onFormSubmission();
-    }
-  
-    for (const [key, value] of Object.entries(data)) {
-      formData.append(`${key}`, value.toString().trim());
-    }
+     onFormSubmission?.();
 
-    const imageUrl =
-      typeof data.imageUrl === 'string' && formData.get('imageUrl')
-        ? (formData.get('imageUrl') as string).trim()
-        : 'https://res.cloudinary.com/jlml/image/upload/v1732854541/shop-with-me/nl7nmglwobqi3thdvoor.jpg';
+     const petData = getValues();
+     petData.imageUrl ||
+       'https://res.cloudinary.com/jlml/image/upload/v1732854541/shop-with-me/nl7nmglwobqi3thdvoor.jpg';
 
-    const pet = {
-      name: formData.get('name') as string,
-      ownerName: formData.get('ownerName') as string,
-      imageUrl,
-      age: +(formData.get('age') as string),
-      notes: formData.get('notes') as string,
-    };
+     const action = isNew
+       ? () => createPet(formData)
+       : () => selectedPet?.id && editPet(selectedPet.id, formData);
 
-    if (!isNew && selectedPet?.id) {
-      handleEditPet(selectedPet?.id , pet);
-    } else {
-      handleAddPet(pet);
-    }
+     const { ok, message } = (await action()) as CreatePetResponse;
 
+     if (!ok) {
+       toast({
+         description: message,
+         variant: 'destructive',
+         action: <MinusCircledIcon />,
+       });
+       return;
+     }
+
+     toast({
+       description: message,
+       className: ok ? 'bg-green-500 text-white text-lg' : '',
+       variant: ok ? 'default' : 'destructive',
+       action: ok ? <CheckCircledIcon /> : <MinusCircledIcon />,
+     });
   }, []);
-  console.log('selectedPet', selectedPet);
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col'>
-      <div className='space-y-3'>
+    <form action={handleAction} className='flex flex-col'>
+      <div className='space-y-3 text-lg'>
         <div className='space-y-1'>
           <Label htmlFor='name'>Name</Label>
-          <Input id='name' {...register('name', { required: true })} />
+          <Input id='name' {...register('name', { required: true })} required />
           {errors.name && <p className='text-red-500'>{errors.name.message}</p>}
         </div>
 
@@ -86,6 +98,7 @@ export default function PetForm({ title, onFormSubmission, isNew = true }: PetFo
           <Input
             id='ownerName'
             {...register('ownerName', { required: true })}
+            required
           />
           {errors.ownerName && (
             <p className='text-red-500'>{errors.ownerName.message}</p>
@@ -94,7 +107,7 @@ export default function PetForm({ title, onFormSubmission, isNew = true }: PetFo
 
         <div className='space-y-1'>
           <Label htmlFor='imageUrl'>Image Url</Label>
-          <Input id='imageUrl' {...register('imageUrl')}/>
+          <Input id='imageUrl' {...register('imageUrl')} />
           {errors.imageUrl && (
             <p className='text-red-500'>{errors.imageUrl.message}</p>
           )}
@@ -102,26 +115,24 @@ export default function PetForm({ title, onFormSubmission, isNew = true }: PetFo
 
         <div className='space-y-1'>
           <Label htmlFor='age'>Age</Label>
-          <Input id='age' {...register('age', { required: true })} />
+          <Input id='age' {...register('age', { required: true })} required />
           {errors.age && <p className='text-red-500'>{errors.age.message}</p>}
         </div>
 
         <div className='space-y-1'>
           <Label htmlFor='notes'>Notes</Label>
-          <Textarea id='notes' {...register('notes', { required: true })} />
+          <Textarea
+            id='notes'
+            {...register('notes', { required: true })}
+            required
+          />
           {errors.notes && (
             <p className='text-red-500'>{errors.notes.message}</p>
           )}
         </div>
       </div>
 
-      <Button
-        variant={'secondary'}
-        type='submit'
-        className='bg-zinc-200 hover:bg-zinc-300 mt-7'
-      >
-        {title}
-      </Button>
+      <PetFormBtn title={title} isNew={isNew} />
     </form>
   );
 }

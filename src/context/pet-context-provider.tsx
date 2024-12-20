@@ -1,5 +1,6 @@
 'use client';
 
+import { createPet } from '@/actions/pets/createPet';
 import { Pet } from '@/interfaces/Pet';
 import { createContext, useState } from 'react';
 
@@ -21,17 +22,18 @@ interface PetContext {
 export const PetContext = createContext<PetContext | null>(null);
 
 export default function PetContextProvider({
-  data,
+  data: pets,
   children,
 }: PetContextProviderProps) {
-  const [pets, setPets] = useState(data);
   const [selectedPetId, setSelectedPetId] = useState<string | null>(null);
   const petsById = new Map(pets.map((pet) => [pet.id, pet]));
   const selectedPet = selectedPetId ? petsById.get(selectedPetId) : null;
 
   const handleAddPet = async (pet: Omit<Pet, 'id'>) => {
-    const newPet = { ...pet, id: crypto.randomUUID() };
-    setPets((prev) => [...prev, newPet]);
+    // const newPet = { ...pet, id: crypto.randomUUID() };
+    // setPets((prev) => [...prev, newPet]);
+
+    await createPet(pet);
   };
 
   const handleEditPet = async (petId: Pet['id'], newPetData: Omit<Pet, 'id'>) => {

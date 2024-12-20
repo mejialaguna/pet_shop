@@ -30,7 +30,7 @@ export const initialData: Pet[] = [
   },
   {
     id: '00e880aa-8bed-417b-9197-2ccce17e0267',
-    name: 'Charlie',
+    name: 'Evelyn',
     ownerName: 'Chris Johnson',
     imageUrl:
       'https://res.cloudinary.com/jlml/image/upload/v1734630649/pet-store/ezwpgztefdlxgjn8lyvr.png',
@@ -57,7 +57,7 @@ export const initialData: Pet[] = [
   },
   {
     id: '19b587aa-8aef-4e0e-b47f-7943cedc9143',
-    name: 'Rocky',
+    name: 'Leon Scanor',
     ownerName: 'Toni Parker',
     imageUrl:
       'https://res.cloudinary.com/jlml/image/upload/v1734630648/pet-store/b3o0rbaerf9wcydreuil.png',
@@ -66,7 +66,7 @@ export const initialData: Pet[] = [
   },
   {
     id: 'ff2241a4-de12-42c2-aa26-2bd4ede4fa54',
-    name: 'Lucy',
+    name: 'Mia',
     ownerName: 'Jordan Brown',
     imageUrl:
       'https://res.cloudinary.com/jlml/image/upload/v1734630648/pet-store/cxmoq9nda1juwn9a3ile.png',
@@ -84,7 +84,7 @@ export const initialData: Pet[] = [
   },
   {
     id: '5b1be4ad-5d93-4aae-8f14-28bf1eec9bc7',
-    name: 'Bella',
+    name: 'Michael',
     ownerName: 'Morgan Lee',
     imageUrl:
       'https://res.cloudinary.com/jlml/image/upload/v1734630578/pet-store/agpf7vtl2thfttfpbkkr.webp',
