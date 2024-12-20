@@ -1,5 +1,6 @@
-import { Pet } from '@/interfaces/Pet';
 import cuid from 'cuid';
+
+import { Pet } from '@/interfaces/Pet';
 
 export const initialData: Pet[] = [
   {

@@ -4,8 +4,8 @@ import { revalidatePath } from 'next/cache';
 
 import { PetEssentials } from '@/interfaces/Pet';
 import prisma from '@/lib/prisma';
-import { petFormSchema } from '@/lib/validations';
 import { sleep } from '@/lib/utils';
+import { petFormSchema } from '@/lib/validations';
 
 interface CreatePetResponse {
   ok: boolean;
