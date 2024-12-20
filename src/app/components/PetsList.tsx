@@ -25,7 +25,7 @@ export default function PetsList() {
   const handleSelecttion = useCallback((id:string) => {
     handleChangeSelectedPetId(id);
     setSearchQuery('');
-  }, [handleChangeSelectedPetId]);
+  }, [handleChangeSelectedPetId, setSearchQuery]);
 
   return (
     <ul className='bg-white shadow-sm'>

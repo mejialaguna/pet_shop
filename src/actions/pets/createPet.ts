@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 
+import { PetEssentials } from '@/interfaces/Pet';
 import prisma from '@/lib/prisma';
 import { sleep } from '@/lib/utils';
 
@@ -10,7 +11,7 @@ interface CreatePetResponse {
   message: string;
 }
 
-export const createPet = async (newPetData): Promise<CreatePetResponse> => {
+export const createPet = async (newPetData: PetEssentials): Promise<CreatePetResponse> => {
   try {
     await sleep(1000);
 

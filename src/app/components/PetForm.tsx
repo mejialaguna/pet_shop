@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { usePetContent } from '@/hooks/usePetContent';
-import { Pet } from '@/interfaces/Pet';
+import { PetEssentials } from '@/interfaces/Pet';
 import { petFormSchema, TPetForm } from '@/lib/validations';
 
 import PetFormBtn from './pet-form-btn';
@@ -18,8 +18,6 @@ type PetFormProps = {
   onFormSubmission?: () => void;
   isNew?: boolean;
 };
-
-type PetEssentials = Omit<Pet, 'id' | 'createdAt' | 'updatedAt' | 'userId'>;
 
 export default function PetForm({
   title,
@@ -33,6 +31,9 @@ export default function PetForm({
     getValues,
     formState: { errors },
   } = useForm<TPetForm>({
+
+    // ** this resolver is handling the validation of the form using zod, and no longer need to add the validation in the input components e.g. {...register('imageUrl', {required: true})} now we only need to add {...register('imageUrl')}
+
     resolver: zodResolver(petFormSchema),
     defaultValues:
       selectedPet && !isNew
@@ -67,14 +68,14 @@ export default function PetForm({
        : () => selectedPet?.id && handleEditPet(selectedPet.id, sanitizedPetData);
 
      await action();
-  }, []);
+  }, [getValues, handleAddPet, handleEditPet, isNew, onFormSubmission, selectedPet?.id, trigger]);
 
   return (
     <form action={handleAction} className='flex flex-col'>
       <div className='space-y-3 text-lg'>
         <div className='space-y-1'>
           <Label htmlFor='name'>Name</Label>
-          <Input id='name' {...register('name', { required: true })} required />
+          <Input id='name' {...register('name')} />
           {errors.name && <p className='text-red-500'>{errors.name.message}</p>}
         </div>
 
@@ -82,8 +83,7 @@ export default function PetForm({
           <Label htmlFor='ownerName'>Owner Name</Label>
           <Input
             id='ownerName'
-            {...register('ownerName', { required: true })}
-            required
+            {...register('ownerName')}
           />
           {errors.ownerName && (
             <p className='text-red-500'>{errors.ownerName.message}</p>
@@ -92,7 +92,7 @@ export default function PetForm({
 
         <div className='space-y-1'>
           <Label htmlFor='imageUrl'>Image Url</Label>
-          <Input id='imageUrl' {...register('imageUrl')} />
+          <Input id='imageUrl' {...register('imageUrl', {required: true})} />
           {errors.imageUrl && (
             <p className='text-red-500'>{errors.imageUrl.message}</p>
           )}
@@ -100,17 +100,13 @@ export default function PetForm({
 
         <div className='space-y-1'>
           <Label htmlFor='age'>Age</Label>
-          <Input id='age' {...register('age', { required: true })} required />
+          <Input id='age' {...register('age')} />
           {errors.age && <p className='text-red-500'>{errors.age.message}</p>}
         </div>
 
         <div className='space-y-1'>
           <Label htmlFor='notes'>Notes</Label>
-          <Textarea
-            id='notes'
-            {...register('notes', { required: true })}
-            required
-          />
+          <Textarea id='notes' {...register('notes')} />
           {errors.notes && (
             <p className='text-red-500'>{errors.notes.message}</p>
           )}

@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 
+import { PetEssentials } from '@/interfaces/Pet';
 import prisma from '@/lib/prisma';
 
 interface CreatePetResponse {
@@ -9,7 +10,7 @@ interface CreatePetResponse {
   message: string;
 }
 
-export const editPet = async (id: string, newPetData): Promise<CreatePetResponse> => {
+export const editPet = async (id: string, newPetData: PetEssentials): Promise<CreatePetResponse> => {
   try { 
     await prisma.pet.update({
       where: { id },

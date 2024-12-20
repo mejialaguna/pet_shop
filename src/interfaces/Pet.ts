@@ -7,8 +7,10 @@ interface Pet {
   notes: string;
 }
 
+type PetEssentials = Omit<Pet, 'id' | 'userId'>;
+
 interface PetDetailsProps {
   selectedPet: Pet | null | undefined;
 }
 
-export type { Pet, PetDetailsProps };
+export type { Pet, PetDetailsProps, PetEssentials };
