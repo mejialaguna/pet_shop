@@ -2,25 +2,20 @@ import PetContextProvider from '@/context/pet-context-provider';
 import { AppFooter, AppHeader, AppToppper } from '../../components';
 import { Pet } from '@/interfaces/Pet';
 import SearchContextProvider from '@/context/search-context-provider';
-import { initialData } from '../../../../public/seed/seed';
-
+import { getPets } from '@/actions/pets/get-pets';
+import { Toaster } from '@/components/ui/toaster';
 
 export default async function AppLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const petsDataResponse: Pet[] = initialData;
+  const {ok, pets} = await getPets();
+  const petsDataResponse: Pet[] = pets;
 
-  // if (!petsDataResponse.ok) {
-  //   throw new Error('Failed to fetch pets data');
-  // }
-
-  if (!initialData?.length) {
+  if (!ok) {
     throw new Error('Failed to fetch pets data');
   }
-
-  // const petsData: Pet[] = await petsDataResponse.json();
 
   return (
     <>
@@ -34,6 +29,8 @@ export default async function AppLayout({
         </SearchContextProvider>
         <AppFooter />
       </div>
+
+      <Toaster />
     </>
   );
 }

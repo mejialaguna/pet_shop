@@ -13,7 +13,7 @@ export const petFormSchema = z
       .max(100),
     imageUrl: z.union([
       z.literal(''),
-      z.string().trim().url({ message: 'Image url must be a valid url' }),
+      z.string().trim().url({ message: 'Image url must be a valid url eg: https://' }),
     ]),
     age: z.coerce.number().int().positive().max(99999),
     notes: z.union([z.literal(''), z.string().trim().max(1000)]),
