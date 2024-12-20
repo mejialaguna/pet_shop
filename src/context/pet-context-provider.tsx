@@ -5,7 +5,7 @@ import { createContext, useOptimistic, useState } from 'react';
 
 import { createPet, editPet, deletePet } from '@/actions/pets';
 import { toast } from '@/components/ui/use-toast';
-import { Pet } from '@/interfaces/Pet';
+import { Pet, PetEssentials } from '@/interfaces/Pet';
 
 interface PetContextProviderProps {
   data: Pet[];
@@ -18,8 +18,8 @@ interface PetContext {
   handleChangeSelectedPetId: (id: string) => void;
   selectedPet: Pet | null | undefined;
   handleCheckoutPet: (id: string) => void;
-  handleAddPet: (pet: Omit<Pet, 'id'>) => void;
-  handleEditPet: (petId: Pet['id'], newPetData: Omit<Pet, 'id'>) => void;
+  handleAddPet: (pet: PetEssentials) => void;
+  handleEditPet: (petId: Pet['id'], newPetData: PetEssentials) => void;
 }
 
 export const PetContext = createContext<PetContext | null>(null);
@@ -28,8 +28,6 @@ interface CreatePetResponse {
   ok: boolean;
   message: string;
 }
-
-type PetEssentials = Omit<Pet, 'id' | 'createdAt' | 'updatedAt' | 'userId'>;
 
 export default function PetContextProvider({
   data,

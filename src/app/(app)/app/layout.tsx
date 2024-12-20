@@ -6,7 +6,6 @@ import { Pet } from '@/interfaces/Pet';
 
 import { AppFooter, AppHeader, AppToppper } from '../../components';
 
-
 export default async function AppLayout({
   children,
 }: {
