@@ -1,23 +1,12 @@
 import Image from 'next/image';
-import { PetDetailsProps } from '@/interfaces/Pet';
-import { usePetContent } from '@/hooks/usePetContent';
 import { Button } from '@/components/ui/button';
 import Modal from './modal';
 import PetForm from './PetForm';
-import { deletePet } from '@/actions/pets/delete-pet';
-import { useCallback, useTransition } from 'react';
-import { toast } from '@/components/ui/use-toast';
+import { usePetContent } from '@/hooks/usePetContent';
+import { PetDetailsProps } from '@/interfaces/Pet';
 
 export default function PetImage({ selectedPet }: PetDetailsProps) {
-  const { handleCheckoutPet } = usePetContent();
-  const handleCheckout = useCallback(async(id:string) => {
-    const {ok, message} = await deletePet(id);
-    toast({
-      description: message,
-      className: ok ? 'bg-green-500 text-white text-lg' : '',
-      variant: ok ? 'default' : 'destructive',
-    });
-  }, []);
+  const { handleCheckoutPet } = usePetContent()
 
   return (
     <div className='flex items-center bg-white px-8 py-5 border-b border-light justify-between'>
@@ -48,7 +37,7 @@ export default function PetImage({ selectedPet }: PetDetailsProps) {
         <Button
           variant={'secondary'}
           className='transition-all bg-zinc-200 hover:bg-zinc-300 rounded-full'
-          onClick={() => selectedPet?.id && handleCheckout(selectedPet.id)}
+          onClick={() => selectedPet?.id && handleCheckoutPet(selectedPet.id)}
         >
           Checkout
         </Button>

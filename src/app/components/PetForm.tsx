@@ -1,28 +1,23 @@
 'use client';
 
+import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@radix-ui/react-label';
-import { useToast } from '@/components/ui/use-toast';
-import { MinusCircledIcon, CheckCircledIcon } from '@radix-ui/react-icons';
 import { usePetContent } from '@/hooks/usePetContent';
 import { petFormSchema, TPetForm } from '@/lib/validations';
-import { createPet } from '@/actions/pets/createPet';
 import PetFormBtn from './pet-form-btn';
-import { editPet } from '@/actions/pets/update-pet';
-import { useCallback } from 'react';
+import { Pet } from '@/interfaces/Pet';
 
 type PetFormProps = {
   title?: string;
   onFormSubmission?: () => void;
   isNew?: boolean;
 };
-interface CreatePetResponse {
-  ok: boolean;
-  message: string;
-}
+
+type PetEssentials = Omit<Pet, 'id' | 'createdAt' | 'updatedAt' | 'userId'>;
 
 export default function PetForm({
   title,
@@ -30,7 +25,6 @@ export default function PetForm({
   isNew = true,
 }: PetFormProps) {
   const { handleAddPet, selectedPet, handleEditPet } = usePetContent();
-  const { toast } = useToast();
   const {
     register,
     handleSubmit,
@@ -57,31 +51,21 @@ export default function PetForm({
 
      onFormSubmission?.();
 
-     const petData = getValues();
-     petData.imageUrl ||
-       'https://res.cloudinary.com/jlml/image/upload/v1732854541/shop-with-me/nl7nmglwobqi3thdvoor.jpg';
+    const petData = getValues();
+    const sanitizedPetData: PetEssentials = {
+      ...petData,
+      imageUrl:
+        petData?.imageUrl && typeof petData?.imageUrl === 'string'
+          ? petData?.imageUrl
+          : 'https://res.cloudinary.com/jlml/image/upload/v1732854541/shop-with-me/nl7nmglwobqi3thdvoor.jpg',
+      age: +petData?.age,
+    };
 
      const action = isNew
-       ? () => createPet(formData)
-       : () => selectedPet?.id && editPet(selectedPet.id, formData);
+       ? () => handleAddPet(sanitizedPetData)
+       : () => selectedPet?.id && handleEditPet(selectedPet.id, sanitizedPetData);
 
-     const { ok, message } = (await action()) as CreatePetResponse;
-
-     if (!ok) {
-       toast({
-         description: message,
-         variant: 'destructive',
-         action: <MinusCircledIcon />,
-       });
-       return;
-     }
-
-     toast({
-       description: message,
-       className: ok ? 'bg-green-500 text-white text-lg' : '',
-       variant: ok ? 'default' : 'destructive',
-       action: ok ? <CheckCircledIcon /> : <MinusCircledIcon />,
-     });
+     await action();
   }, []);
 
   return (

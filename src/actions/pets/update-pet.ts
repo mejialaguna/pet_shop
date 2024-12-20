@@ -8,28 +8,19 @@ interface CreatePetResponse {
   message: string;
 }
 
-export const editPet = async (id: string, formData: FormData): Promise<CreatePetResponse> => {
-  try {
-    const pet = {
-      name: formData.get('name') as string,
-      ownerName: formData.get('ownerName') as string,
-      imageUrl:
-        (formData.get('imageUrl') as string) ||
-        'https://res.cloudinary.com/jlml/image/upload/v1732854541/shop-with-me/nl7nmglwobqi3thdvoor.jpg',
-      age: +(formData.get('age') as string),
-      notes: formData.get('notes') as string,
-    };
-    
+export const editPet = async (id: string, newPetData): Promise<CreatePetResponse> => {
+  console.log('newPetData', newPetData);
+  try { 
     await prisma.pet.update({
       where: { id },
-      data: { ...pet },
+      data: { ...newPetData },
     });
 
     revalidatePath('/app', 'layout');
-
+    console.log('revalidating Path');
     return {
       ok: true,
-      message: `${pet?.name}, has been updated`,
+      message: `${newPetData?.name}, has been updated`,
     };
 
   } catch (error) {

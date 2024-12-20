@@ -9,22 +9,12 @@ interface CreatePetResponse {
   message: string;
 }
 
-export const createPet = async (formData: FormData): Promise<CreatePetResponse> => {
-  console.log('formData', formData);
+export const createPet = async (newPetData): Promise<CreatePetResponse> => {
   try {
     await sleep(1000);
-    const pet = {
-      name: formData.get('name') as string,
-      ownerName: formData.get('ownerName') as string,
-      imageUrl:
-        (formData.get('imageUrl') as string) ||
-        'https://res.cloudinary.com/jlml/image/upload/v1732854541/shop-with-me/nl7nmglwobqi3thdvoor.jpg',
-      age: +(formData.get('age') as string),
-      notes: formData.get('notes') as string,
-    };
 
     await prisma.pet.create({
-      data: { ...pet },
+      data: { ...newPetData },
     });
 
     ('we can revalidate what we need either way using url path or the folder structure where the action is located');
@@ -33,8 +23,8 @@ export const createPet = async (formData: FormData): Promise<CreatePetResponse> 
 
     return {
       ok: true,
-      message: `${pet?.name}, is now a part of the family`,
-    }
+      message: `${newPetData?.name}, is now a part of the family`,
+    };
   } catch (error) {
     return {
       ok: false,
