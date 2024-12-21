@@ -2,6 +2,65 @@ import cuid from 'cuid';
 
 import { Pet } from '@/interfaces/Pet';
 
+export const users = [
+  {
+    id: cuid(),
+    name: 'Jane Smith',
+    userName: 'janesmith',
+    email: 'jane@example.com',
+    password: '',
+  },
+  {
+    id: cuid(),
+    name: 'Morgan Lee',
+    userName: 'morganlee',
+    email: 'morgan@example.com',
+    password: '',
+  },
+  {
+    id: cuid(),
+    name: 'Chris Johnson',
+    userName: 'chrisjohnson',
+    email: 'chris@example.com',
+    password: '',
+  },
+  {
+    id: cuid(),
+    name: 'Jamie Green',
+    userName: 'jamiegreen',
+    email: 'jamie@example.com',
+    password: '',
+  },
+  {
+    id: cuid(),
+    name: 'Alex Kim',
+    userName: 'alexkim',
+    email: 'alex@example.com',
+    password: '',
+  },
+  {
+    id: cuid(),
+    name: 'Toni Parker',
+    userName: 'toniparker',
+    email: 'toni@example.com',
+    password: '',
+  },
+  {
+    id: cuid(),
+    name: 'Jordan Brown',
+    userName: 'jordanbrown',
+    email: 'jordan@example.com',
+    password: '',
+  },
+  {
+    id: cuid(),
+    name: 'John Doe',
+    userName: 'johndoe',
+    email: 'john@example.com',
+    password: '',
+  },
+];
+
 export const initialData: Pet[] = [
   {
     id: cuid(),
