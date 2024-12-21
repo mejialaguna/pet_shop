@@ -22,7 +22,9 @@ export default function Appheader() {
   return (
     <header className='flex justify-between mx-7 items-center border-b border-white/40'>
       <Image
-        src={'../icon.svg'}
+        src={
+          'https://res.cloudinary.com/jlml/image/upload/v1734768828/pet-store/tueyxpd40xi3xmtkp1ah.webp'
+        }
         alt={'logo'}
         width={50}
         height={50}

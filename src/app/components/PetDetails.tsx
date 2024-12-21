@@ -14,7 +14,9 @@ export default function PetDetails() {
       <div className='flex h-full w-full items-center justify-center'>
         <Image
           className='w-[300px] h-[300] flex items-center justify-center'
-          src={'/animal_place_holder.png'}
+          src={
+            'https://res.cloudinary.com/jlml/image/upload/v1734768718/pet-store/cojcxmkycsbyyzgwyqo7.png'
+          }
           alt={'placeholder'}
           height={300}
           width={300}

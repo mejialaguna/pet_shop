@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import React from 'react';
 
-import { AuthNavigation, Form, SocialButton } from '@/app/components';
+import { AuthNavigation, SocialButton } from '@/app/components';
 
+import Form from './Form';
 import logo from '../../../icon.svg';
 
 export const LoginForm = () => {

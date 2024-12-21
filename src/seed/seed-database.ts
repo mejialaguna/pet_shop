@@ -12,6 +12,7 @@ async function main() {
   const sanetizedUsers = await Promise.all(
     users.map(async (user) => ({
       ...user,
+      email: user.email.toLowerCase().trim(),
       password: await bcrypt.hash('dimelo', 10),
     }))
   );

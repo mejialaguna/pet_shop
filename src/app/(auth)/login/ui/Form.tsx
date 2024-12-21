@@ -6,14 +6,10 @@ import { useForm } from 'react-hook-form';
 import { FaEye } from 'react-icons/fa';
 import { FaEyeSlash } from 'react-icons/fa6';
 
+import { login } from '@/actions/user/login';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-
-
-interface TformProps {
-  username: string;
-  password: string;
-}
+import { TAuth } from '@/lib/validations';
 
 export default function Form() {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
@@ -22,7 +18,7 @@ export default function Form() {
     trigger,
     getValues,
     formState: { errors },
-  } = useForm<TformProps>();
+  } = useForm<TAuth>();
 
   const Icon = useMemo(
     () => (isPasswordVisible ? FaEye : FaEyeSlash),
@@ -33,22 +29,23 @@ export default function Form() {
     const result = await trigger();
     if (!result) return;
 
-    getValues();
+    const data = getValues();
+    await login(data);
   }, [getValues, trigger]);
 
   return (
     <form action={handleAction} className='mb-6 space-y-3'>
       <div className='space-y-3'>
         <div className='space-y-1'>
-          <Label htmlFor='username'>Username</Label>
+          <Label htmlFor='email'>Email</Label>
           <Input
-            id='username'
-            {...register('username', {
-              required: 'Please add a valid userName',
+            id='email'
+            {...register('email', {
+              required: 'Please add a valid Email',
             })}
           />
-          {errors.username && (
-            <p className='text-red-500 text-xs'>{errors.username.message}</p>
+          {errors.email && (
+            <p className='text-red-500 text-xs'>{errors.email.message}</p>
           )}
         </div>
 
@@ -56,7 +53,7 @@ export default function Form() {
           <Label htmlFor='password'>Password</Label>
           <div className='flex relative'>
             <Icon
-              className='absolute right-5 top-3'
+              className='absolute right-5 top-3 cursor-pointer'
               onClick={() => setIsPasswordVisible(!isPasswordVisible)}
             />
             <Input
