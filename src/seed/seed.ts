@@ -19,9 +19,9 @@ export const users = [
   },
   {
     id: cuid(),
-    name: 'Chris Johnson',
+    name: 'Jose Mejia',
     userName: 'chrisjohnson',
-    email: 'chris@example.com',
+    email: 'mejiaLaguna@example.com',
     password: '',
   },
   {
@@ -83,7 +83,7 @@ export const initialData: Pet[] = [
   {
     id: cuid(),
     name: 'Lucy',
-    ownerName: 'Chris Johnson',
+    ownerName: 'Jose Mejia',
     imageUrl:
       'https://res.cloudinary.com/jlml/image/upload/v1734630649/pet-store/f7fx8zovbm0gbwwsk2kw.png',
     age: 14,
@@ -92,7 +92,7 @@ export const initialData: Pet[] = [
   {
     id: cuid(),
     name: 'Evelyn',
-    ownerName: 'Chris Johnson',
+    ownerName: 'Jose Mejia',
     imageUrl:
       'https://res.cloudinary.com/jlml/image/upload/v1734630649/pet-store/ezwpgztefdlxgjn8lyvr.png',
     age: 13,

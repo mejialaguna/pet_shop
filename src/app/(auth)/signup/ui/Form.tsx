@@ -66,7 +66,7 @@ export default function Form() {
           <Label htmlFor='password'>Password</Label>
           <div className='flex relative'>
             <Icon
-              className='absolute right-5 top-3'
+              className='absolute right-5 top-3 cursor-pointer'
               onClick={() => setIsPasswordVisible(!isPasswordVisible)}
             />
             <Input

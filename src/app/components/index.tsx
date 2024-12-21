@@ -12,6 +12,6 @@ export { default as PetNotes } from './PetNotes';
 export { default as PetButton } from './PetButton';
 export { default as Modal } from './modal';
 export { default as PetForm } from './PetForm';
-export { default as SocialButton } from './socialLinks';
+export { default as SocialButton } from './SocialLinks';
 export { default as AuthNavigation } from './AuthNavigation';
-export { default as Form } from '../(auth)/login/ui/Form';
+export { default as LogoutButton } from './LogoutButton';

@@ -26,7 +26,12 @@ export const createPet = async (newPetData: PetEssentials): Promise<CreatePetRes
 
   try {
     await prisma.pet.create({
-      data: { ...data },
+      data: {
+        ...data,
+        // User: {
+        //   ...user
+        // },
+      },
     });
 
     // ('we can revalidate what we need either way using url path or the folder structure where the action is located');

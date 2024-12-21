@@ -6,7 +6,10 @@ import { Button } from '@/components/ui/button';
 export default function page() {
   const sharedStyles = 'rounded-full h-10 px-6';
   return (
-    <main className='bg-[#F1A469] min-h-screen flex flex-col xl:flex-row items-center justify-center gap-10'>
+    <main
+      className='bg-gradient-to-br from-orange-400 via-orange-500 to-orange-400
+    min-h-screen flex flex-col xl:flex-row items-center justify-center gap-10 py-10'
+    >
       <Image
         src={'/havenCare.png'}
         alt={'logo'}
