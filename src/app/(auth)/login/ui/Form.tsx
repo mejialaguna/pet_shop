@@ -1,6 +1,7 @@
 'use client';
 
 import { Label } from '@radix-ui/react-label';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useCallback, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaEye } from 'react-icons/fa';
@@ -17,8 +18,13 @@ export default function Form() {
     register,
     trigger,
     getValues,
+    clearErrors,
     formState: { errors },
   } = useForm<TAuth>();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') || '/app/dashboard';
+  const [errorMessage, setErrorMessage] = useState<string | undefined>('');
 
   const Icon = useMemo(
     () => (isPasswordVisible ? FaEye : FaEyeSlash),
@@ -30,8 +36,14 @@ export default function Form() {
     if (!result) return;
 
     const data = getValues();
-    await login(data);
-  }, [getValues, trigger]);
+    const { ok, message } = await login(data);
+
+    if (!ok) {
+      setErrorMessage(message);
+    }
+
+    router.push(callbackUrl);
+  }, [callbackUrl, getValues, router, trigger]);
 
   return (
     <form action={handleAction} className='mb-6 space-y-3'>
@@ -39,9 +51,14 @@ export default function Form() {
         <div className='space-y-1'>
           <Label htmlFor='email'>Email</Label>
           <Input
+            autoFocus
             id='email'
             {...register('email', {
               required: 'Please add a valid Email',
+              onChange: () => {
+                clearErrors('email');
+                setErrorMessage('');
+              },
             })}
           />
           {errors.email && (
@@ -59,13 +76,20 @@ export default function Form() {
             <Input
               type={`${!isPasswordVisible ? 'password' : 'text'}`}
               id='password'
+              placeholder='*******'
               {...register('password', {
-                required: 'This field can be empty',
+                required: 'This field cant be empty',
+                onChange: () => {
+                  clearErrors('password');
+                  setErrorMessage('');
+                },
               })}
             />
           </div>
-          {errors.password && (
-            <p className='text-red-500 text-xs'>{errors.password.message}</p>
+          {(errors?.password || errorMessage) && (
+            <p className='text-red-500 text-xs'>
+              {errors?.password?.message || errorMessage}
+            </p>
           )}
         </div>
       </div>

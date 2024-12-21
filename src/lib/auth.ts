@@ -37,7 +37,13 @@ const authConfig: NextAuthConfig = {
           console.log('no password valid');
           return null;
         }
-        return user;
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { password: _, updatedAt, createdAt,  ...rest } = user;
+
+        return {
+          ...rest
+        };
       },
     }),
   ],

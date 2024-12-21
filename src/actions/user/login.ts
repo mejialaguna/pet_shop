@@ -3,7 +3,12 @@
 import { signIn } from '@/lib/auth';
 import { authSchema, TAuth } from '@/lib/validations';
 
-export const login = async (userData: TAuth) => {
+interface AuthenticationResult {
+  ok: boolean;
+  message?: string;
+}
+
+export const login = async (userData: TAuth): Promise<AuthenticationResult> => {
   const { success, data, error } = authSchema.safeParse(userData);
 
   if (!success) {
@@ -13,5 +18,19 @@ export const login = async (userData: TAuth) => {
     };
   }
 
-  await signIn('credentials', data);
+  try {
+    await signIn('credentials', {
+      ...data,
+      redirect: false,
+    });
+
+    return { ok: true };
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Authentication error:', error);
+    return {
+      ok: false,
+      message: 'Wrong email or password',
+    };
+  }
 };
