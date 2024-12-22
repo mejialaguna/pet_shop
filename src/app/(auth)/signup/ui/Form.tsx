@@ -2,6 +2,7 @@
 
 import { Label } from '@radix-ui/react-label';
 import { useCallback, useMemo, useState } from 'react';
+import { useFormState, useFormStatus } from 'react-dom';
 import { useForm } from 'react-hook-form';
 import { FaEye } from 'react-icons/fa';
 import { FaEyeSlash } from 'react-icons/fa6';
@@ -10,7 +11,6 @@ import { login } from '@/actions/user/login';
 import { signUpUser } from '@/actions/user/signUp';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-
 
 interface TformProps {
   email: string;
@@ -34,7 +34,6 @@ export default function Form() {
       () => (isPasswordVisible ? FaEye : FaEyeSlash),
       [isPasswordVisible]
     );
-  
   const handleAction = useCallback(async () => {
     const result = await trigger();
     if (!result) return;
@@ -58,8 +57,11 @@ export default function Form() {
 
   }, [getValues, trigger]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, dispatch] = useFormState(handleAction, undefined);
+
   return (
-    <form action={handleAction} className='space-y-4 mb-6'>
+    <form action={dispatch} className='space-y-4 mb-6'>
       <div className='space-y-3'>
         <div className='space-y-1'>
           <Label htmlFor='name'>Full Name</Label>
@@ -145,14 +147,23 @@ export default function Form() {
           <small className='text-red-600 mb-3'>{errorMessage}</small>
         )}
       </div>
-      <Button
+      <SignUpButton />
+    </form>
+  );
+}
+
+const SignUpButton = () => {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button
         type='submit'
         variant={'secondary'}
         className='text-sm text-white font-extrabold hover:text-stone-100
         w-full bg-gradient-to-br from-orange-200 to-orange-500 hover:scale-105 transition-all'
+      disabled={pending}
       >
         Sign up
       </Button>
-    </form>
   );
-}
+};

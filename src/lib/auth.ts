@@ -39,10 +39,10 @@ const authConfig: NextAuthConfig = {
         }
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { password: _, updatedAt, createdAt,  ...rest } = user;
+        const { password: _, updatedAt, createdAt, ...rest } = user;
 
         return {
-          ...rest
+          ...rest,
         };
       },
     }),
@@ -60,6 +60,22 @@ const authConfig: NextAuthConfig = {
       }
 
       return !isTryingToAccessApp;
+    },
+    jwt({ token, user }) {
+      // on sign in we need to get the user id to be able to get the is with all ther properties
+      if (user) {
+        token.data = user;
+      }
+
+      return token;
+    },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    session({ session, token, user }) {
+      //this data will be available for the live of the session.
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      session.user = token.data as any;
+      return session;
     },
   },
 } satisfies NextAuthConfig;

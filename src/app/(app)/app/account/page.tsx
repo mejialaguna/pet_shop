@@ -1,13 +1,8 @@
-import { redirect } from 'next/navigation';
-
 import { ContentBlock, LogoutButton } from '@/app/components';
-import { auth } from '@/lib/auth';
+import { isLoggedIn } from '@/lib/actionsUtils';
 
 export default async function Page() {
-  const session = await auth();
-  if (!session) {
-    return redirect('/login');
-  }
+  const session = await isLoggedIn()
 
   return (
     <main className='mx-7'>

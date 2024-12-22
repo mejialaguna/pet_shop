@@ -34,7 +34,7 @@ async function main() {
           imageUrl: pet.imageUrl,
           age: pet.age,
           notes: pet.notes,
-          User: {
+          user: {
             connect: {
               id: owner.id, // Connect to the User by id
             },

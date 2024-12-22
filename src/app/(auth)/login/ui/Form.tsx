@@ -42,7 +42,8 @@ export default function Form() {
       setErrorMessage(message);
     }
 
-    router.push(callbackUrl);
+    if (callbackUrl) router.push(callbackUrl);
+
   }, [callbackUrl, getValues, router, trigger]);
 
   return (
@@ -96,7 +97,6 @@ export default function Form() {
       <Button
         type='submit'
         variant={'secondary'}
-        // onClick={() => setIsSignUp(!isSignUp)}
         className='text-sm text-white font-extrabold hover:text-stone-100
         w-full bg-gradient-to-br from-orange-200 to-orange-500
         hover:scale-105 transition-all'
