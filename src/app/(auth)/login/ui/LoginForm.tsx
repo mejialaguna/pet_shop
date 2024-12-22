@@ -36,7 +36,10 @@ export const LoginForm = () => {
           // onClick={() => handleSocialLogin('github')}
         />
       </div>
-      <AuthNavigation />
+      <AuthNavigation
+        pathName='/signup'
+        label={'Already have an account? Sign in'}
+      />
     </>
   );
 };

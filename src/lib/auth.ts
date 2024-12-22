@@ -2,7 +2,8 @@ import bcrypt from 'bcryptjs';
 import NextAuth, { type NextAuthConfig } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 
-import prisma from '@/lib/prisma';
+import { getUserByEmail } from './actionsUtils';
+import { TAuth } from './validations';
 
 const authConfig: NextAuthConfig = {
   pages: {
@@ -16,14 +17,9 @@ const authConfig: NextAuthConfig = {
     Credentials({
       async authorize(credentials) {
         // run on login only
-        const { email, password } = credentials;
+        const { email, password } = credentials as TAuth;
 
-        const user = await prisma.user.findUnique({
-          where: {
-            email,
-          },
-        });
-
+        const user = await getUserByEmail(email);
         if (!user) {
           // eslint-disable-next-line no-console
           console.log('no email valid');
@@ -80,4 +76,4 @@ const authConfig: NextAuthConfig = {
   },
 } satisfies NextAuthConfig;
 
-export const { auth, signIn, signOut } = NextAuth(authConfig);
+export const { auth, signIn, signOut, handlers } = NextAuth(authConfig);

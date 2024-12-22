@@ -36,7 +36,7 @@ export const RegisterForm = () => {
           // onClick={() => handleSocialLogin('github')}
         />
       </div>
-      <AuthNavigation pathName={'signUp'} />
+      <AuthNavigation pathName={'/login'} label={'Need an account? Sign up'} />
     </>
   );
 };
