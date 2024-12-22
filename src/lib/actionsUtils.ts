@@ -21,11 +21,18 @@ export const isLoggedIn = async () => {
 };
 
 export async function getUserByEmail(email: User['email']) {
-  const user = await prisma.user.findUnique({
-    where: {
-      email,
-    },
-  });
-
-  return user;
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+  
+    return user;
+    
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error fetching user by email:', error);
+    return null;
+  }
 }
