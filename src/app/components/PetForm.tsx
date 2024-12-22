@@ -93,7 +93,7 @@ export default function PetForm({
 
         <div className='space-y-1'>
           <Label htmlFor='imageUrl'>Image Url</Label>
-          <Input id='imageUrl' {...register('imageUrl', {required: true})} />
+          <Input id='imageUrl' {...register('imageUrl')} />
           {errors.imageUrl && (
             <p className='text-red-500'>{errors.imageUrl.message}</p>
           )}

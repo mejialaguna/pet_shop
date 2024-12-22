@@ -41,13 +41,16 @@ export default function Form({ searchParams }: SearchParams) {
     if (!result) return;
 
     const data = getValues();
-    const { ok, message } = await login(data);
+    const response = await login(data);
 
-    if (!ok) {
-      setErrorMessage(message);
+    if (!response?.ok) {
+      setErrorMessage(response?.message);
+      return;
     }
 
     if (callbackUrl) router.push(callbackUrl);
+
+    router.push('/');
   }, [callbackUrl, getValues, router, trigger]);
 
   return (

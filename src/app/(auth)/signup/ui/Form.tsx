@@ -11,11 +11,9 @@ import { login } from '@/actions/user/login';
 import { signUpUser } from '@/actions/user/signUp';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { TSignup } from '@/lib/validations';
 
-interface TformProps {
-  email: string;
-  name: string;
-  password: string;
+interface TformProps extends TSignup {
   confirmPassword: string;
 }
 
@@ -38,14 +36,14 @@ export default function Form() {
     const result = await trigger();
     if (!result) return;
 
-    const { email, name, password, confirmPassword } = getValues();
+    const { email, name, password, confirmPassword }: TformProps = getValues();
 
     if (password !== confirmPassword) {
       setErrorMessage('Passwords do not match');
       return;
     }
 
-    const response = await signUpUser(name, email, password);
+    const response = await signUpUser({name, email, password});
 
     if (!response?.ok) {
       setErrorMessage(response?.message);

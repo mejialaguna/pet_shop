@@ -38,3 +38,13 @@ export const authSchema = z.object({
 });
 
 export type TAuth = z.infer<typeof authSchema>;
+
+export const signupSchema = authSchema.extend({
+  name: z
+    .string()
+    .min(1, 'Name is required')
+    .max(100, 'Name must be 100 characters or fewer'),
+});
+
+// Type inference for sign-up schema
+export type TSignup = z.infer<typeof signupSchema>;

@@ -3,7 +3,7 @@ import NextAuth, { type NextAuthConfig } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 
 import { getUserByEmail } from './actionsUtils';
-import { TAuth } from './validations';
+import { authSchema } from './validations';
 
 const authConfig: NextAuthConfig = {
   pages: {
@@ -16,8 +16,13 @@ const authConfig: NextAuthConfig = {
   providers: [
     Credentials({
       async authorize(credentials) {
-        // run on login only
-        const { email, password } = credentials as TAuth;
+         const {success, data} = authSchema.safeParse(credentials);
+         if (!success) {
+           return null;
+         }
+        
+         // run on login only
+         const { email, password } = data;
 
         const user = await getUserByEmail(email);
         if (!user) {
