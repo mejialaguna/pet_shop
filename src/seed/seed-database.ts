@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 import { initialData, users } from './seed';
 import prisma from '../lib/prisma';

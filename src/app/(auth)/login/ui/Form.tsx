@@ -1,7 +1,7 @@
 'use client';
 
 import { Label } from '@radix-ui/react-label';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useCallback, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaEye } from 'react-icons/fa';
@@ -12,7 +12,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { TAuth } from '@/lib/validations';
 
-export default function Form() {
+interface SearchParams {
+  searchParams: {
+    callbackUrl?: string;
+  };
+}
+
+export default function Form({ searchParams }: SearchParams) {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
   const {
     register,
@@ -22,8 +28,7 @@ export default function Form() {
     formState: { errors },
   } = useForm<TAuth>();
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl') || '/app/dashboard';
+  const callbackUrl = searchParams?.callbackUrl;
   const [errorMessage, setErrorMessage] = useState<string | undefined>('');
 
   const Icon = useMemo(
@@ -43,7 +48,6 @@ export default function Form() {
     }
 
     if (callbackUrl) router.push(callbackUrl);
-
   }, [callbackUrl, getValues, router, trigger]);
 
   return (

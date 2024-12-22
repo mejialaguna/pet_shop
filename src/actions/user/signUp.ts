@@ -1,6 +1,6 @@
 'use server';
 
-import bcryptjs from 'bcryptjs';
+import bcrypt from 'bcryptjs';
 
 import prisma from '@/lib/prisma';
 
@@ -35,7 +35,7 @@ export const signUpUser = async (
       data: {
         name,
         email: email.toLowerCase(),
-        password: bcryptjs.hashSync(password),
+        password: bcrypt.hashSync(password),
       },
       select: {
         id: true,

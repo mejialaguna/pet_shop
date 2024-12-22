@@ -1,12 +1,17 @@
 import Image from 'next/image';
-import React from 'react';
 
 import { AuthNavigation, SocialButton } from '@/app/components';
 
 import Form from './Form';
 import logo from '../../../icon.svg';
 
-export const LoginForm = () => {
+interface SearchParams {
+  searchParams: {
+    callbackUrl?: string;
+  };
+}
+
+export const LoginForm = ({ searchParams }: SearchParams) => {
   return (
     <>
       <div className='flex flex-col items-center space-y-3 mb-6'>
@@ -15,7 +20,7 @@ export const LoginForm = () => {
           Welcome back
         </h2>
       </div>
-      <Form />
+      <Form searchParams={searchParams} />
       <div className='space-y-4'>
         <div className='relative'>
           <div className='absolute inset-0 flex items-center'>
