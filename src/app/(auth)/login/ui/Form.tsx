@@ -48,7 +48,9 @@ export default function Form({ searchParams }: SearchParams) {
       return;
     }
 
-    if (callbackUrl) router.push(callbackUrl);
+    if (callbackUrl) {
+      router.push(callbackUrl)
+    }
 
     router.push('/');
   }, [callbackUrl, getValues, router, trigger]);

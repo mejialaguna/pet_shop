@@ -24,12 +24,12 @@ export async function getUserByEmail(email: User['email']) {
   try {
     const user = await prisma.user.findUnique({
       where: {
-        email,
+        email: email?.toLowerCase(),
       },
     });
-  
+
     return user;
-    
+
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Error fetching user by email:', error);

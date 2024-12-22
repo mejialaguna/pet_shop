@@ -1,5 +1,6 @@
 'use server';
 
+import { Prisma } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 
 import prisma from '@/lib/prisma';
@@ -19,19 +20,19 @@ export const signUpUser = async ({ name, email, password }: TSignup): Promise<Au
   const { success, data } = signupSchema.safeParse({ name, email, password });
 
   if (!success) return { ok: false, message: 'Invalid user data' }
+  const { name: parsedName, email: parsedEmail, password: parsedPassword } = data;
 
   try {
-    const { name: parsedName, email: parsedEmail, password: parsedPassword } = data;
-    const userAlreadyExist = await prisma.user.findUnique({
-      where: { email: parsedEmail.toLowerCase() },
-    });
+    // const userAlreadyExist = await prisma.user.findUnique({
+    //   where: { email: parsedEmail.toLowerCase() },
+    // });
 
-    if (userAlreadyExist) {
-      return {
-        ok: false,
-        message: `Email ${parsedEmail} already exists`,
-      };
-    }
+    // if (userAlreadyExist) {
+    //   return {
+    //     ok: false,
+    //     message: `Email ${parsedEmail} already exists`,
+    //   };
+    // }
 
     const user = await prisma.user.create({
       data: {
@@ -51,6 +52,14 @@ export const signUpUser = async ({ name, email, password }: TSignup): Promise<Au
       user: user,
     };
   } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if(error.code === 'P2002') {
+        return {
+          ok: false,
+          message: `Email ${data.email} already exists`,
+        };
+      }
+    }
     return {
       ok: false,
       message: `something went wrong creating user, ${error}`,

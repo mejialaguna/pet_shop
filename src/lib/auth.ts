@@ -16,13 +16,13 @@ const authConfig: NextAuthConfig = {
   providers: [
     Credentials({
       async authorize(credentials) {
-         const {success, data} = authSchema.safeParse(credentials);
-         if (!success) {
-           return null;
-         }
-        
-         // run on login only
-         const { email, password } = data;
+        const { success, data } = authSchema.safeParse(credentials);
+        if (!success) {
+          return null;
+        }
+
+        // run on login only
+        const { email, password } = data;
 
         const user = await getUserByEmail(email);
         if (!user) {
