@@ -54,13 +54,19 @@ const authConfig: NextAuthConfig = {
       const isLoggedIn = !!auth?.user;
       const isTryingToAccessApp = request.nextUrl.pathname.includes('/app');
 
-      if (isLoggedIn) {
-        return isTryingToAccessApp
-          ? true
-          : Response.redirect(new URL('/app/dashboard', request.url));
+      if (!isLoggedIn && isTryingToAccessApp) {
+        return false;
       }
-
-      return !isTryingToAccessApp;
+      if (isLoggedIn && isTryingToAccessApp) {
+        return true;
+      }
+      if (isLoggedIn && !isTryingToAccessApp) {
+        return Response.redirect(new URL('/app/dashboard', request.nextUrl));
+      }
+      if (!isLoggedIn && !isTryingToAccessApp) {
+        return true
+      }
+      return false;
     },
     jwt({ token, user }) {
       // on sign in we need to get the user id to be able to get the is with all ther properties

@@ -7,7 +7,6 @@ import { useForm } from 'react-hook-form';
 import { FaEye } from 'react-icons/fa';
 import { FaEyeSlash } from 'react-icons/fa6';
 
-import { login } from '@/actions/user/login';
 import { signUpUser } from '@/actions/user/signUp';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -43,15 +42,20 @@ export default function Form() {
       return;
     }
 
-    const response = await signUpUser({name, email, password});
+   try {
+     const response = await signUpUser({ name, email, password });
 
-    if (!response?.ok) {
-      setErrorMessage(response?.message);
-      return;
-    }
+     if (!response?.ok) {
+       setErrorMessage(response?.message || 'Signup failed');
+       return;
+     }
 
-    await login({ email, password });
-    window.location.replace('/');
+     // Redirect to dashboard after successful signup and sign in
+     window.location.replace('/');
+   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   } catch (error) {
+     setErrorMessage('Error during signup. Please try again later.');
+   }
 
   }, [getValues, trigger]);
 

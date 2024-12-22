@@ -43,7 +43,7 @@ export const LoginForm = ({ searchParams }: SearchParams) => {
       </div>
       <AuthNavigation
         pathName='/signup'
-        label={'Already have an account? Sign in'}
+        label={'Need an account? Sign up'}
       />
     </>
   );

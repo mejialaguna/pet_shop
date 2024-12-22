@@ -6,6 +6,8 @@ import bcrypt from 'bcryptjs';
 import prisma from '@/lib/prisma';
 import { signupSchema, TSignup } from '@/lib/validations';
 
+import { login } from './login';
+
 interface AuthenticationResult {
   ok: boolean;
   message?: string;
@@ -23,17 +25,6 @@ export const signUpUser = async ({ name, email, password }: TSignup): Promise<Au
   const { name: parsedName, email: parsedEmail, password: parsedPassword } = data;
 
   try {
-    // const userAlreadyExist = await prisma.user.findUnique({
-    //   where: { email: parsedEmail.toLowerCase() },
-    // });
-
-    // if (userAlreadyExist) {
-    //   return {
-    //     ok: false,
-    //     message: `Email ${parsedEmail} already exists`,
-    //   };
-    // }
-
     const user = await prisma.user.create({
       data: {
         name: parsedName,
@@ -46,6 +37,15 @@ export const signUpUser = async ({ name, email, password }: TSignup): Promise<Au
         email: true,
       },
     });
+
+    const loginResult = await login({ email, password });
+
+    if (!loginResult.ok) {
+      return {
+        ok: false,
+        message: loginResult.message || 'Login failed after signup',
+      };
+    }
 
     return {
       ok: true,

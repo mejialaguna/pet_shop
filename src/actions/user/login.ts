@@ -1,5 +1,7 @@
 'use server';
 
+import { AuthError } from 'next-auth';
+
 import { signIn } from '@/lib/auth';
 import { authSchema, TAuth } from '@/lib/validations';
 
@@ -26,11 +28,24 @@ export const login = async (userData: TAuth): Promise<AuthenticationResult> => {
 
     return { ok: true };
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Authentication error:', error);
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case 'CredentialsSignin':
+          return {
+            ok: false,
+            message: 'Invalid username or password',
+          };
+
+        default:
+          return {
+           ok: false,
+           message: 'An unexpected error occurred during checking user authentication',
+         }
+      }
+    }
     return {
       ok: false,
-      message: 'Wrong email or password',
+      message: 'An unexpected error occurred during authentication',
     };
   }
 };
