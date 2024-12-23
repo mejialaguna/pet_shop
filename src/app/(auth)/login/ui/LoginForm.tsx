@@ -1,5 +1,6 @@
 import Image from 'next/image';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { AuthNavigation, SocialButton } from '@/app/components';
 
 import Form from './Form';
@@ -22,7 +23,7 @@ export const LoginForm = ({ searchParams }: SearchParams) => {
       </div>
       <Form searchParams={searchParams} />
       <div className='space-y-4'>
-        <div className='relative'>
+        {/* <div className='relative'>
           <div className='absolute inset-0 flex items-center'>
             <div className='w-full border-t border-gray-300'></div>
           </div>
@@ -31,15 +32,15 @@ export const LoginForm = ({ searchParams }: SearchParams) => {
               Or continue with
             </span>
           </div>
-        </div>
-        <SocialButton
+        </div> */}
+        {/* <SocialButton
           provider='google'
           // onClick={() => handleSocialLogin('google')}
         />
         <SocialButton
           provider='github'
           // onClick={() => handleSocialLogin('github')}
-        />
+        /> */}
       </div>
       <AuthNavigation
         pathName='/signup'
