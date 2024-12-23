@@ -18,10 +18,10 @@ module.exports = {
     },
     extend: {
       colors: {
-        light: 'rgba(0 , 0, 0, 0.08)'
-      }
+        light: 'rgba(0 , 0, 0, 0.08)',
+      },
     },
   },
   // eslint-disable-next-line @typescript-eslint/no-require-imports
-  plugins: [require('tailwindcss-animate'), require('tailwind-scrollbar-hide')],
+  plugins: [import('tailwindcss-animate'), import('tailwind-scrollbar-hide')],
 };
