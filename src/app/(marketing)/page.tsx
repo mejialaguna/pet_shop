@@ -11,7 +11,9 @@ export default function page() {
     min-h-screen flex flex-col xl:flex-row items-center justify-center gap-10 py-10'
     >
       <Image
-        src={'/havenCare.png'}
+        src={
+          'https://res.cloudinary.com/jlml/image/upload/v1735072274/pet-store/c9f4szeqltnpqsggotjd.png'
+        }
         alt={'logo'}
         width={520}
         height={480}
