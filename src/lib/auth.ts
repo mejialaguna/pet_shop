@@ -2,6 +2,8 @@ import bcrypt from 'bcryptjs';
 import NextAuth, { type NextAuthConfig } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 
+import prisma from '@/lib/prisma';
+
 import { getUserByEmail } from './actionsUtils';
 import { authSchema } from './validations';
 
@@ -52,26 +54,53 @@ const authConfig: NextAuthConfig = {
     authorized: ({ auth, request }) => {
       // runs on every request with middleware
       const isLoggedIn = !!auth?.user;
-      const isTryingToAccessApp = request.nextUrl.pathname.includes('/app');
+      const { pathname } = request.nextUrl;
+      const publickPaths =
+        pathname === '/login' || pathname === '/signup' || pathname === '/';
 
-      if (!isLoggedIn && isTryingToAccessApp) {
-        return false;
+      if (!isLoggedIn) {
+        // Allow access only to login/signup if not logged in
+        if (publickPaths) {
+          return true;
+        }
+        return false; // Block access to other pages
       }
-      if (isLoggedIn && isTryingToAccessApp) {
-        return true;
+
+      // Logged-in user: check access
+      if (auth?.user?.hasAccess) {
+        // Redirect from login/signup to dashboard if user has access
+        if (publickPaths || pathname === '/payment') {
+          return Response.redirect(new URL('/app/dashboard', request.nextUrl));
+        }
+        return true; // Allow access to the rest of the app
+      } else {
+        // Redirect user without access to /payment
+        if (!pathname.includes('/payment')) {
+          return Response.redirect(new URL('/payment', request.nextUrl));
+        }
+        return true; // Allow access to /payment
       }
-      if (isLoggedIn && !isTryingToAccessApp) {
-        return Response.redirect(new URL('/app/dashboard', request.nextUrl));
-      }
-      if (!isLoggedIn && !isTryingToAccessApp) {
-        return true
-      }
-      return false;
     },
-    jwt({ token, user }) {
+    jwt: async ({ token, user, trigger }) => {
       // on sign in we need to get the user id to be able to get the is with all ther properties
       if (user) {
-        token.data = user;
+        // on sign in
+        token.userId = user.id!;
+        token.email = user.email!;
+        token.hasAccess = user.hasAccess;
+      }
+
+      // this will update the JWT when the "update" function from session auth is call.(if we want to update any values that we depend on )
+      if (trigger === 'update') {
+        // on every request
+        const userFromDb = await prisma.user.findUnique({
+          where: {
+            email: token.email,
+          },
+        });
+        if (userFromDb) {
+          token.hasAccess = userFromDb.hasAccess;
+        }
       }
 
       return token;
@@ -81,7 +110,9 @@ const authConfig: NextAuthConfig = {
       //this data will be available for the live of the session.
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      session.user = token.data as any;
+      session.user.id = token.userId;
+      session.user.hasAccess = token.hasAccess;
+
       return session;
     },
   },
